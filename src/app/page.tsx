@@ -107,7 +107,7 @@ export default function Home() {
             distance.
           </p>
           <Link href="/explore">
-            <Button className="bg-[#F4A261] text-[#102A26] hover:bg-[#e76f51] px-8 py-3 rounded-lg text-lg font-medium inline-block transition-colors">
+            <Button className="bg-[#F4A261] text-[#102A26] hover:bg-[#e76f51] px-8 py-4 rounded-lg text-lg font-medium  transition-colors">
               Find Trips Now
             </Button>
           </Link>

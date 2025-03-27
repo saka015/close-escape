@@ -197,6 +197,23 @@ export default function ExplorePage() {
     }
   };
 
+  const handleTripCardClick = (destination: string) => {
+    if (!location.latitude || !location.longitude) {
+      alert("Your location is not available. Cannot open directions.");
+      return;
+    }
+
+    // Format the Google Maps URL with directions from user location to destination
+    const mapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${
+      location.latitude
+    },${location.longitude}&destination=${encodeURIComponent(
+      destination
+    )}&travelmode=driving`;
+
+    // Open in a new tab
+    window.open(mapsUrl, "_blank");
+  };
+
   return (
     <main className="flex flex-col min-h-screen bg-[#102A26] text-[#F1FAEE]">
       {/* Header Section */}
@@ -358,10 +375,16 @@ export default function ExplorePage() {
                 {tripSuggestions.map((trip, index) => (
                   <div
                     key={trip.destination || index}
-                    className="bg-[#1B4D3E] rounded-lg overflow-hidden shadow-lg hover:-translate-y-2 hover:shadow-xl transition-all duration-300 animate-fadeIn"
+                    className="bg-[#1B4D3E] rounded-lg overflow-visible shadow-lg hover:-translate-y-2 hover:shadow-xl transition-all duration-300 animate-fadeIn cursor-pointer relative group  mt-8"
                     style={{ animationDelay: `${index * 150 + 200}ms` }}
+                    onClick={() => handleTripCardClick(trip.destination)}
                   >
-                    <div className="h-32 bg-gradient-to-r from-[#3A7D44] to-[#1B4D3E] flex items-center justify-center">
+                    {/* Tooltip - Repositioned */}
+                    <div className="absolute opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r rounded-lg rounded-b-none from-[#3A7D44] to-[#1B4D3E] text-white text-sm py-1 px-3  shadow-lg -top-8 left-1/2 transform -translate-x-1/2 pointer-events-none z-20 whitespace-nowrap">
+                      Click to get directions
+                    </div>
+
+                    <div className="h-32 bg-gradient-to-r rounded-lg rounded-b-none from-[#3A7D44] to-[#1B4D3E] flex items-center justify-center">
                       <h3 className="text-xl font-semibold text-[#F1FAEE] px-4 text-center">
                         {trip.destination}
                       </h3>
